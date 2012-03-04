@@ -1,0 +1,25 @@
+diff -ur drbd-8.3.8.orig/user/Makefile.in drbd-8.3.8/user/Makefile.in
+--- drbd-8.3.8.orig/user/Makefile.in	2010-06-02 07:49:56.000000000 +0000
++++ drbd-8.3.8/user/Makefile.in	2010-06-04 15:42:49.000000000 +0000
+@@ -74,7 +74,7 @@
+ 	cp $^ $@
+ 
+ drbdadm: $(drbdadm-obj)
+-	$(CC) -o $@ $^
++	$(CC) $(CFLAGS) -o $@ $^
+ 
+ drbdadm_scanner.c: drbdadm_scanner.fl drbdadm_parser.h
+ 	flex -s -odrbdadm_scanner.c drbdadm_scanner.fl
+@@ -83,10 +83,10 @@
+ 	flex -s -odrbdmeta_scanner.c drbdmeta_scanner.fl
+ 
+ drbdsetup: $(drbdsetup-obj)
+-	$(CC) -o $@ $^
++	$(CC) $(CFLAGS) -o $@ $^
+ 
+ drbdmeta: $(drbdmeta-obj)
+-	$(CC) -o $@ $^
++	$(CC) $(CFLAGS) -o $@ $^
+ 
+ clean:
+ 	rm -f drbdadm_scanner.c drbdmeta_scanner.c
