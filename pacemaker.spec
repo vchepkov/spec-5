@@ -1,6 +1,7 @@
 %global gname haclient
 %global uname hacluster
 %global pcmk_docdir %{_docdir}/%{name}
+%global version_tag 066152ee99f9ee1dc46f29e8e6dfc1231d779a3c
 
 # Compatibility macros for distros (fedora) that don't provide Python macros by default
 # Do this instead of trying to conditionally %include %{_rpmconfigdir}/macros.python
@@ -34,6 +35,7 @@ License:	GPLv2+ and LGPLv2+
 Url:		http://www.clusterlabs.org
 Group:		System Environment/Daemons
 Source0:	pacemaker.tar.gz
+Source1:	pacemaker-git-hash
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 AutoReqProv:	on
 Requires(pre):	cluster-glue
@@ -141,6 +143,7 @@ resource health.
 %setup -q -n pacemaker
 
 %build
+sed -i -e "s/^BUILD_VERSION=unknown/BUILD_VERSION=$(cat %{SOURCE1})/" configure.ac 
 ./autogen.sh
 
 # RHEL <= 5 does not support --docdir
