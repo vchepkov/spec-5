@@ -28,12 +28,12 @@
 
 Name:		pacemaker
 Summary:	Scalable High-Availability cluster resource manager
-Version:	1.0.11
+Version:	1.0.12
 Release:	1%{?dist}.vvc
 License:	GPLv2+ and LGPLv2+
 Url:		http://www.clusterlabs.org
 Group:		System Environment/Daemons
-Source0:	pacemaker.tar.bz2
+Source0:	pacemaker.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 AutoReqProv:	on
 Requires(pre):	cluster-glue
@@ -55,7 +55,7 @@ BuildRequires:  help2man tcpd-devel
 # Required for core functionality
 BuildRequires:  automake autoconf libtool pkgconfig
 BuildRequires:	glib2-devel cluster-glue-libs-devel libxml2-devel libxslt-devel 
-BuildRequires:	pkgconfig python-devel gcc-c++ bzip2-devel gnutls-devel pam-devel
+BuildRequires:	pkgconfig python-devel gcc-c++ bzip2-devel gnutls-devel pam-devel libtool-ltdl-devel
 
 # Enables optional functionality
 BuildRequires:	ncurses-devel openssl-devel libselinux-devel
@@ -116,7 +116,7 @@ License:	GPLv2+ and LGPLv2+
 Summary:	Pacemaker development package
 Group:		Development/Libraries
 Requires:	pacemaker-libs = %{version}-%{release}
-Requires:	cluster-glue-libs-devel
+Requires:	cluster-glue-libs-devel libtool-ltdl-devel
 %if %{with ais}
 Requires:	corosynclib-devel
 %endif
@@ -263,14 +263,24 @@ rm -rf %{buildroot}
 %doc AUTHORS
 
 %changelog
-* Sat Apr 30 2011 Vadym Chepkov <vvc@chepkov.com> - 1.0.11-1.vvc
+* Sat Apr 28 2012 Vadym Chepkov <vchepkov@gmail.com> - 1.0.12-1.vvc
 - rebuild
+
+* Wed Nov 23 2011 Andrew Beekhof <andrew@beekhof.net> 1.0.12-1
+- Update source tarball to Git revision: 6118778
+- Statistics:
+  Changesets: 96
+  Diff:       121 files changed, 8617 insertions(+), 988 deletions(-)
+
+- See https://github.com/ClusterLabs/pacemaker-1.0/blob/master/ChangeLog for further details
 
 * Fri Apr 29 2011 Andrew Beekhof <andrew@beekhof.net> 1.0.11-1
 - Update source tarball to revision: bc6104efe006 (stable-1.0) tip
 - Statistics:
   Changesets: 85
   Diff:       500 files changed, 69642 insertions(+), 58270 deletions(-)
+
+- See http://hg.clusterlabs.org/pacemaker/stable-1.0/file/tip/ChangeLog for further details
 
 * Fri Nov 12 2010 Andrew Beekhof <andrew@beekhof.net> 1.0.10-1
 - Update source tarball to revision: 4172c2ad2756 (stable-1.0) tip
