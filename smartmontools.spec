@@ -1,6 +1,6 @@
 Summary:	Tools for monitoring SMART capable hard disks
 Name:		smartmontools
-Version:	5.41
+Version:	5.42
 Release:	1%{?dist}.vvc
 Epoch:		1
 Group:		System Environment/Base
@@ -84,6 +84,9 @@ fi
 %{_datadir}/%{name}/drivedb.h
 
 %changelog
+* Wed Apr 11 2012 Vadym Chepkov <vchepkov@gmail.com> - 1:5.42-1.vvc
+- update to 5.42
+
 * Thu Sep 15 2011 Vadym Chepkov <vchepkov@gmail.com> - 1:5.41-1.vvc
 - update to 5.41
 
