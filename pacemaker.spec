@@ -23,7 +23,7 @@
 %bcond_without heartbeat
 # ESMTP is not available in RHEL, only in EPEL. Allow people to build
 # the RPM without ESMTP in case they choose not to use EPEL packages
-%bcond_without esmtp
+%bcond_with    esmtp
 %bcond_without snmp
 
 Name:		pacemaker
