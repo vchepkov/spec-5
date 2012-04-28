@@ -1,7 +1,6 @@
 %global gname haclient
 %global uname hacluster
 %global pcmk_docdir %{_docdir}/%{name}
-%global version_tag 066152ee99f9ee1dc46f29e8e6dfc1231d779a3c
 
 # Compatibility macros for distros (fedora) that don't provide Python macros by default
 # Do this instead of trying to conditionally %include %{_rpmconfigdir}/macros.python
