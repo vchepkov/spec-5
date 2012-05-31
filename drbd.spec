@@ -27,10 +27,9 @@
 
 Name: drbd
 Summary: DRBD driver for Linux
-Version: 8.3.12
+Version: 8.3.13
 Release: 1%{?dist}
 Source: http://oss.linbit.com/%{name}/8.3/%{name}-%{version}.tar.gz
-Patch1: drbd-8.3.8-gcc.patch
 License: GPLv2+
 ExclusiveOS: linux
 Group: System Environment/Kernel
@@ -186,6 +185,7 @@ Pacemaker High Availability cluster manager.
 %defattr(755,root,root,-)
 %{_prefix}/lib/%{name}/crm-fence-peer.sh
 %{_prefix}/lib/%{name}/crm-unfence-peer.sh
+%{_prefix}/lib/%{name}/stonith_admin-fence-peer.sh
 %{_prefix}/lib/ocf/resource.d/linbit/drbd
 %endif # with pacemaker
 
@@ -227,6 +227,7 @@ in the Cluster distribution.
 %files rgmanager
 %defattr(755,root,root,-)
 %{_datadir}/cluster/drbd.sh
+%{_prefix}/lib/%{name}/rhcs_fence
 
 %defattr(-,root,root,-)
 %{_datadir}/cluster/drbd.metadata
@@ -274,7 +275,6 @@ management utility.
 
 %prep
 %setup -q
-%patch1 -p1
 
 %build
 %configure \
@@ -312,6 +312,9 @@ fi
 
 
 %changelog
+* Mon May  7 2012 Philipp Reisner <phil@linbit.com> - 8.3.13-1
+- New upstream release.
+
 * Mon Oct 28 2011 Philipp Reisner <phil@linbit.com> - 8.3.12-1
 - New upstream release.
 
