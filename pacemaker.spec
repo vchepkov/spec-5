@@ -29,7 +29,7 @@
 Name:		pacemaker
 Summary:	Scalable High-Availability cluster resource manager
 Version:	1.0.12
-Release:	1%{?dist}.vvc
+Release:	2%{?dist}.vvc
 License:	GPLv2+ and LGPLv2+
 Url:		http://www.clusterlabs.org
 Group:		System Environment/Daemons
@@ -265,6 +265,9 @@ rm -rf %{buildroot}
 %doc AUTHORS
 
 %changelog
+* Sat Jul 21 2012 Vadym Chepkov <vchepkov@gmail.com> - 1.0.12-2.vvc
+- rebuild
+
 * Sat Apr 28 2012 Vadym Chepkov <vchepkov@gmail.com> - 1.0.12-1.vvc
 - rebuild
 
