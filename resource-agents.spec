@@ -9,11 +9,6 @@
 # published by the Open Source Initiative.
 #
 
-
-
-
-
-
 # 
 # Since this spec file supports multiple distributions, ensure we
 # use the correct group for each.
@@ -27,13 +22,13 @@
 %endif
 
 # determine the ras-set to process based on configure invokation
-%bcond_without rgmanager
+%bcond_with    rgmanager
 %bcond_without linuxha
 
 Name:		resource-agents
 Summary:	Open Source HA Reusable Cluster Resource Scripts
-Version:	3.9.1
-Release:	5%{?rcver:%{rcver}}%{?numcomm:.%{numcomm}}%{?alphatag:.%{alphatag}}%{?dirty:.%{dirty}}%{?dist}
+Version:	3.9.3
+Release:	1%{?dist}.vvc
 License:	GPLv2+ and LGPLv2+
 URL:		http://to.be.defined.com/
 %if 0%{?fedora} || 0%{?centos_version} || 0%{?rhel}
@@ -41,9 +36,7 @@ Group:		System Environment/Base
 %else
 Group:		Productivity/Clustering/HA
 %endif
-Source0:	%{name}-%{version}%{?rcver:%{rcver}}%{?numcomm:.%{numcomm}}%{?alphatag:-%{alphatag}}%{?dirty:-%{dirty}}.tar.bz2
-Patch0:		iscsi.patch
-Patch1:		pgsql.patch
+Source0:	resource-agents.tar.gz
 Obsoletes:	heartbeat-resources <= %{version}
 Provides:	heartbeat-resources = %{version}
 
@@ -51,7 +44,7 @@ Provides:	heartbeat-resources = %{version}
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 # Build dependencies
-BuildRequires: automake autoconf pkgconfig
+BuildRequires: automake >= 1.10.1 autoconf => 2.63 pkgconfig
 BuildRequires: perl python-devel
 BuildRequires: libxslt glib2-devel
 BuildRequires: which
@@ -143,9 +136,7 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 %{error:Unable to determine the distribution/version. This is generally caused by missing /etc/rpm/macros.dist. Please install the correct build packages or define the required macros manually.}
 exit 1
 %endif
-%setup -q -n %{name}-%{version}%{?rcver:%{rcver}}%{?numcomm:.%{numcomm}}%{?alphatag:-%{alphatag}}%{?dirty:-%{dirty}}
-%patch0 -p1
-%patch1 -p1
+%setup -q -n resource-agents
 
 %build
 if [ ! -f configure ]; then
@@ -154,7 +145,6 @@ fi
 
 %if 0%{?fedora} >= 11 || 0%{?centos_version} > 5 || 0%{?rhel} > 5
 CFLAGS="$(echo '%{optflags}')"
-%global conf_opt_rsctmpdir "--with-rsctmpdir=%{_var}/run/heartbeat/rsctmp"
 %global conf_opt_fatal "--enable-fatal-warnings=no"
 %else
 CFLAGS="${CFLAGS} ${RPM_OPT_FLAGS}"
@@ -247,20 +237,28 @@ rm -rf %{buildroot}
 
 %{_includedir}/heartbeat
 
-%if 0%{?fedora} >= 11 || 0%{?centos_version} > 5 || 0%{?rhel} > 5
-%dir %{_var}/run/heartbeat/rsctmp
-%else
 %dir %attr (1755, root, root)	%{_var}/run/resource-agents
-%endif
 
 %{_mandir}/man7/*.7*
 %{_mandir}/man8/ocf-tester.8*
+%{_mandir}/man8/sfex_init.8*
 
 # For compatability with pre-existing agents
 %dir %{_sysconfdir}/ha.d
 %{_sysconfdir}/ha.d/shellfuncs
 
 %{_libdir}/heartbeat
+
+%post -n resource-agents
+if [ $1 = 2 ]; then
+ if [ -d %{_var}/run/heartbeat/rsctmp ]; then
+  cp -fpr %{_var}/run/heartbeat/rsctmp/* %{_var}/run/resource-agents/ 1>/dev/null 2>&1
+  rm -fr %{_var}/run/heartbeat/rsctmp
+ fi
+fi
+%if %{with rgmanager}
+ccs_update_schema > /dev/null 2>&1 ||:
+%endif
 
 %if 0%{?suse_version}
 %preun -n ldirectord
@@ -296,14 +294,5 @@ rm -rf %{buildroot}
 %endif
 
 %changelog
-* Mon Jun 24 2011 Vadym Chepkov <vchepkov@gmail.com> - 3.9.1-5
-- official iscsi patch is included
-
-* Mon Jun 21 2011 Vadym Chepkov <vchepkov@gmail.com> - 3.9.1-4
-- fix pgsql RA
-
-* Mon Jun 20 2011 Vadym Chepkov <vchepkov@gmail.com> - 3.9.1-2
-- fixed iscsi RA for EPEL5
-
-* Thu Jun 16 2011 Autotools generated version <nobody@nowhere.org> - 3.9.1-1
-- Autotools generated version
+* Sat Jul 21 2012 Vadym Chepkov <vchepkov@gmail.com> - 3.9.3-1.vvc
+- update to 3.9.3
