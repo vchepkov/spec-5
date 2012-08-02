@@ -1,6 +1,6 @@
 Summary:	Tools for monitoring SMART capable hard disks
 Name:		smartmontools
-Version:	5.42
+Version:	5.43
 Release:	1%{?dist}.vvc
 Epoch:		1
 Group:		System Environment/Base
@@ -9,9 +9,12 @@ URL:		http://smartmontools.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1:	smartd.initd
 Source2:	smartmontools.sysconf
+Source4:        smartdnotify
 
 #fedora/rhel specific
 Patch1:		smartmontools-5.38-defaultconf.patch
+
+Patch3:         smartmontools-5.40-manfix.patch
 
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 Requires:	fileutils mailx chkconfig initscripts
@@ -29,6 +32,8 @@ failure.
 %prep
 %setup -q 
 %patch1 -p1 -b .defaultconf
+%patch3 -p1 -b .manfix
+
 # fix encoding
 for fe in AUTHORS CHANGELOG
 do
@@ -55,6 +60,8 @@ rm -f examplescripts/Makefile*
 chmod a-x -R examplescripts/*
 install -D -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_initrddir}/smartd
 install -D -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/smartmontools
+install -D -m 755 %{SOURCE4} $RPM_BUILD_ROOT/%{_libexecdir}/%{name}/smartdnotify
+
 
 rm -rf $RPM_BUILD_ROOT/%{_docdir}/%{name}
 
@@ -81,9 +88,13 @@ fi
 %{_sbindir}/update-smart-drivedb
 %{_sbindir}/smartctl
 %{_mandir}/man?/smart*.*
-%{_datadir}/%{name}/drivedb.h
+%{_libexecdir}/%{name}
+%{_datadir}/%{name}
 
 %changelog
+* Wed Aug 01 2012 Vadym Chepkov <vchepkov@gmail.com> - 1:5.43-1.vvc
+- update to 5.43
+
 * Wed Apr 11 2012 Vadym Chepkov <vchepkov@gmail.com> - 1:5.42-1.vvc
 - update to 5.42
 
