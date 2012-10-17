@@ -1,6 +1,6 @@
 Summary:	Tools for monitoring SMART capable hard disks
 Name:		smartmontools
-Version:	5.43
+Version:	6.0
 Release:	1%{?dist}.vvc
 Epoch:		1
 Group:		System Environment/Base
@@ -92,6 +92,9 @@ fi
 %{_datadir}/%{name}
 
 %changelog
+* Tue Oct 16 2012 Vadym Chepkov <vchepkov@gmail.com> - 1:6.0-1.vvc
+- update to 6.0
+
 * Wed Aug 01 2012 Vadym Chepkov <vchepkov@gmail.com> - 1:5.43-1.vvc
 - update to 5.43
 
