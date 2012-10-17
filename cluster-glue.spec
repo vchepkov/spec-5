@@ -7,7 +7,7 @@
 
 Name:		cluster-glue
 Summary:	Reusable cluster components
-Version:	1.0.10
+Version:	1.0.11
 Release:	1%{?dist}.vvc
 License:	GPLv2+ and LGPLv2+
 Url:		http://www.linux-ha.org/wiki/Cluster_Glue
@@ -230,6 +230,9 @@ cluster-glue-extras includes optional components of cluster-glue framework
 %{_libdir}/stonith/plugins/stonith2/ssh.so
 
 %changelog
+* Tue Oct 16 2012 Vadym Chepkov <vchepkov@gmail.com> - 1.0.11-1.vvc
+- update to 1.0.11
+
 * Sat Jul 21 2012 Vadym Chepkov <vchepkov@gmail.com> - 1.0.10-1.vvc
 - update to 1.0.10
 
