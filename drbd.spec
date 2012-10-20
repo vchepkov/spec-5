@@ -27,7 +27,7 @@
 
 Name: drbd
 Summary: DRBD driver for Linux
-Version: 8.3.13
+Version: 8.3.14
 Release: 1%{?dist}
 Source: http://oss.linbit.com/%{name}/8.3/%{name}-%{version}.tar.gz
 License: GPLv2+
@@ -312,6 +312,9 @@ fi
 
 
 %changelog
+* Fri Oct 19 2012 Philipp Reisner <phil@linbit.com> - 8.3.14-1
+- New upstream release.
+
 * Mon May  7 2012 Philipp Reisner <phil@linbit.com> - 8.3.13-1
 - New upstream release.
 
