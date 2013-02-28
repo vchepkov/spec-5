@@ -27,8 +27,8 @@
 
 Name:		resource-agents
 Summary:	Open Source HA Reusable Cluster Resource Scripts
-Version:	3.9.3
-Release:	2%{?dist}.vvc
+Version:	3.9.4
+Release:	1%{?dist}.vvc
 License:	GPLv2+ and LGPLv2+
 URL:		http://to.be.defined.com/
 %if 0%{?fedora} || 0%{?centos_version} || 0%{?rhel}
@@ -296,6 +296,9 @@ ccs_update_schema > /dev/null 2>&1 ||:
 %endif
 
 %changelog
+* Sun Jan 20 2013 Vadym Chepkov <vchepkov@gmail.com> - 3.9.4-1.vvc
+- upgrade to 3.9.4
+
 * Sat Jan 19 2013 Vadym Chepkov <vchepkov@gmail.com> - 3.9.3-2.vvc
 - added Xinetd fix
 
