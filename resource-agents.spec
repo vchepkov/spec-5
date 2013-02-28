@@ -27,7 +27,7 @@
 
 Name:		resource-agents
 Summary:	Open Source HA Reusable Cluster Resource Scripts
-Version:	3.9.4
+Version:	3.9.5
 Release:	1%{?dist}.vvc
 License:	GPLv2+ and LGPLv2+
 URL:		http://to.be.defined.com/
@@ -37,7 +37,6 @@ Group:		System Environment/Base
 Group:		Productivity/Clustering/HA
 %endif
 Source0:	resource-agents.tar.gz
-Patch1:		xinetd-proc.patch
 Obsoletes:	heartbeat-resources <= %{version}
 Provides:	heartbeat-resources = %{version}
 
@@ -138,7 +137,6 @@ See 'ldirectord -h' and linux-ha/doc/ldirectord for more information.
 exit 1
 %endif
 %setup -q -n resource-agents
-%patch1 -p1 -b .xinetd
 
 %build
 if [ ! -f configure ]; then
@@ -202,7 +200,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc AUTHORS COPYING COPYING.GPLv3 ChangeLog
+%doc AUTHORS COPYING COPYING.GPLv3 COPYING.LGPL ChangeLog
 %if %{with linuxha}
 %doc doc/README.webapps
 %doc %{_datadir}/%{name}/ra-api-1.dtd
@@ -296,6 +294,9 @@ ccs_update_schema > /dev/null 2>&1 ||:
 %endif
 
 %changelog
+* Wed Feb 27 2013 Vadym Chepkov <vchepkov@gmail.com> - 3.9.5-1.vvc
+- update to 3.9.5
+
 * Sun Jan 20 2013 Vadym Chepkov <vchepkov@gmail.com> - 3.9.4-1.vvc
 - upgrade to 3.9.4
 
